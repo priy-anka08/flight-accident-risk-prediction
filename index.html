@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AeroSafe Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=5">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>✈️ AeroSafe</h2>
+    <ul>
+        <li>🏠 Dashboard</li>
+        <li>📊 Prediction</li>
+        <li>📁 Reports</li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+    <!-- 🔝 TOP BAR -->
+    <div class="top-bar">
+        <h1>Flight Risk Prediction</h1>
+
+        <div class="user-section">
+            <span>👤 Welcome, {{ session['user'] }}</span>
+            <a href="/logout">
+                <button class="logout-btn">🚪 Logout</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- 💎 FORM CARD -->
+    <div class="form-box">
+
+        <h2>Enter Flight Details</h2>
+
+        <form action="/predict" method="post">
+
+            <div class="grid">
+
+                <div>
+                    <label>Airline</label>
+                    <select name="Airline">
+                        <option value="0">IndiGo</option>
+                        <option value="1">Air India</option>
+                        <option value="2">SpiceJet</option>
+                        <option value="3">Vistara</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Visibility (Km)</label>
+                    <input type="number" step="0.1" name="Visibility_Km">
+                </div>
+
+                <div>
+                    <label>Wind Speed (Kmph)</label>
+                    <input type="number" name="Wind_Speed_Kmph">
+                </div>
+
+                <div>
+                    <label>Weather</label>
+                    <select name="Weather_Condition">
+                        <option value="0">Clear</option>
+                        <option value="1">Cloudy</option>
+                        <option value="2">Rain</option>
+                        <option value="3">Storm</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Turbulence</label>
+                    <select name="Turbulence">
+                        <option value="0">None</option>
+                        <option value="1">Light</option>
+                        <option value="2">Moderate</option>
+                        <option value="3">Severe</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Pilot Experience (hrs)</label>
+                    <input type="number" name="Pilot_Experience_Hrs">
+                </div>
+
+            </div>
+
+            <button type="submit">🚀 Predict Risk</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

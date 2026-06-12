@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=8">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>✈️ AeroSafe</h2>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+    <h1>📊 Prediction Result</h1>
+
+    <!-- Result Card -->
+    <div class="result-card {% if 'High' in prediction_text %}high{% else %}low{% endif %}">
+        
+        <h2>{{ prediction_text }}</h2>
+
+        {% if 'High' in prediction_text %}
+            <p>⚠️ Unsafe conditions detected. Check weather & crew factors.</p>
+        {% else %}
+            <p>✅ Flight conditions are safe.</p>
+        {% endif %}
+
+        <!-- Score + % -->
+        <h3>Risk Score: {{ score }}/9</h3>
+        <h3>Risk Percentage: {{ percent }}%</h3>
+
+        <!-- 🔥 Animated Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                {{ percent }}%
+            </div>
+        </div>
+
+        <!-- Reason -->
+        <h3>🧠 Reason:</h3>
+        <p>{{ reason }}</p>
+
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-box">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <br>
+    <a href="/home"><button class="back-btn">🔙 Back</button></a>
+
+</div>
+
+<!-- 🔥 Chart Script -->
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+
+new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Risk %', 'Remaining'],
+        datasets: [{
+            data: [{{ percent }}, {{ 100 - percent }}],
+            backgroundColor: ['#ff416c', '#00b09b']
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                labels: {
+                    color: "white"
+                }
+            }
+        }
+    }
+});
+</script>
+
+<!-- 🔥 Progress Bar Animation -->
+<script>
+let percent = {{ percent }};
+let bar = document.getElementById("progressBar");
+
+setTimeout(() => {
+    bar.style.width = percent + "%";
+
+    // 🎨 Dynamic color
+    if (percent < 40) {
+        bar.style.background = "#00b09b"; // green
+    } 
+    else if (percent < 70) {
+        bar.style.background = "#f7971e"; // orange
+    } 
+    else {
+        bar.style.background = "#ff416c"; // red
+    }
+
+}, 300);
+</script>
+
+</body>
+</html>

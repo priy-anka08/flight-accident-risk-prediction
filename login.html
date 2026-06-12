@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=4">
+</head>
+
+<body>
+
+<div class="login-bg">
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <h2 class="logo">✈️ AeroSafe</h2>
+            <p class="subtitle">Flight Risk Intelligence System</p>
+
+            {% if error %}
+                <p class="error-msg">{{ error }}</p>
+            {% endif %}
+
+            <form action="{{ url_for('login') }}" method="post">
+
+                <div class="input-group">
+                    <input type="text" name="username" required>
+                    <label>Username</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" name="password" required>
+                    <label>Password</label>
+                    <span class="eye" onclick="togglePassword()">👁</span>
+                </div>
+
+                <button type="submit" class="login-btn">🚀 Login</button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    var pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+</script>
+
+</body>
+</html>
